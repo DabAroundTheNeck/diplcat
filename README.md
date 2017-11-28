@@ -1,2 +1,2 @@
 # diplcat
-DiPlOmArBeItSkAtAlOg 
+Diplomarbeitskatalog by Stichl und Felix
