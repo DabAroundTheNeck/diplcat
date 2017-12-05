@@ -1,8 +1,7 @@
+const DONE = 4; // readyState 4 means the request is done.
+const OK = 200; // status 200 is a successful return.
+
 function login() {
-
-    var DONE = 4; // readyState 4 means the request is done.
-    var OK = 200; // status 200 is a successful return.
-
 
     var loginRequest = new XMLHttpRequest();
     loginRequest.open('GET', './php/login.php');
