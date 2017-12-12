@@ -1,4 +1,5 @@
 <?php
+    include '../php/function.php';
 
     $users = csvToArray("./Benutzer12.12.2017 10_53_33.csv");
     $themen = csvToArray("./Themen12.12.2017 10_50_45.csv");
@@ -14,6 +15,8 @@
         $betreuer = betreuerFromName($themen[$i]['Betreuer'], $users);
         if (count($betreuer) > 1) {
             $data[$i]['Anmerkung'] = 'Lehrer für dieses Projekt überprüfen';
+        } else {
+            $data[$i]['Anmerkung'] = '';
         }
         $data[$i]['Betreuer'] = $betreuer[0];
         for ($j=0; $j < count($betreuer); $j++) {
@@ -35,7 +38,9 @@
 
     $myfile = fopen("login.csv", "a") or die("Unable to open file!");
     for ($i=0; $i < count($data); $i++) {
-        fwrite($myfile, $data[$i]['Email'].";ThisIsPasswort\n");
+        $data[$i]['Password'] = uniqid();
+        fwrite($myfile, $data[$i]['Email'].";".$data[$i]['Password']."\n");
+
     }
     for ($i=0; $i < count($betreuerListe); $i++) {
         fwrite($myfile, $betreuerListe[$i].";ThisIsPasswort\n");
@@ -51,15 +56,6 @@
         fwrite($myfile, $data[$i]['Thema'].";".$data[$i]['Email'].";".$data[$i]['Betreuer'].";".$data[$i]['Anmerkung']."\n");
     }
     fclose($myfile);
-
-
-
-    $testFile = fopen("Test.txt", "r") or die("Unable");
-    //echo fread($testFile,filesize("Test.txt"));
-    fclose($testFile);
-
-    echo("ü");
-
 
     function betreuerFromName($nachname, $users) {
         $data = array();
