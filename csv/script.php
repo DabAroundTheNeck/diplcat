@@ -65,11 +65,11 @@
             $insert_themas_stmt = $pdo->prepare("insert into themas(name, leiter, betreuer) values(:name, :leiter, :betreuer)");
 
             for ($i=0; $i < count($data); $i++) {
-                $insert_user_stmt->bindParam(':name', $data[$i]['Thema']);
-                $insert_user_stmt->bindParam(':leiter', $data[$i]['Email']);
-                $insert_user_stmt->bindParam(':betreuer', $data[$i]['Betreuer']);
+                $insert_themas_stmt->bindParam(':name', $data[$i]['Thema']);
+                $insert_themas_stmt->bindParam(':leiter', $data[$i]['Email']);
+                $insert_themas_stmt->bindParam(':betreuer', $data[$i]['Betreuer']);
 
-                $insert_user_stmt->execute();
+                $insert_themas_stmt->execute();
                 echo "Projekt Created \n";
             }
             $response = array('response' => 'Projekts inserted');
