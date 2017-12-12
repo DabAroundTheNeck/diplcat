@@ -50,7 +50,6 @@
 
     writeLogins($logins);
     writeDbData($data);
-
     createUsers($pdo, $logins);
     createProjekts($pdo, $data);
 
@@ -70,7 +69,6 @@
                 $insert_themas_stmt->bindParam(':betreuer', $data[$i]['Betreuer']);
 
                 $insert_themas_stmt->execute();
-                echo "Projekt Created \n";
             }
             $response = array('response' => 'Projekts inserted');
             $pdo->commit();
@@ -115,7 +113,6 @@
                 $insert_user_stmt->bindParam(':passhash', password_hash($myLogins[$i]['Password'], PASSWORD_DEFAULT));
 
                 $insert_user_stmt->execute();
-                echo "User Created \n";
             }
             $response = array('response' => 'Users inserted');
             $pdo->commit();
