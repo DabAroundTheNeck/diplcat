@@ -46,14 +46,40 @@
         $logins[$i]['Password'] = generateRandomString();
     }
 
+    echo "Data Structure generated \n";
+
     writeLogins($logins);
     writeDbData($data);
 
     createUsers($pdo, $logins);
     createProjekts($pdo, $data);
 
-    function createProjekts($pdo, $data) {
 
+    echo "\n";
+
+    function createProjekts($pdo, $data) {
+        try {
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            $insert_themas_stmt = $pdo->prepare("insert into themas(name, leiter, betreuer) values(:name, :leiter, :betreuer)");
+
+            for ($i=0; $i < count($data); $i++) {
+                $insert_user_stmt->bindParam(':name', $data[$i]['Thema']);
+                $insert_user_stmt->bindParam(':leiter', $data[$i]['Email']);
+                $insert_user_stmt->bindParam(':betreuer', $data[$i]['Betreuer']);
+
+                $insert_user_stmt->execute();
+                echo "Projekt Created \n";
+            }
+            $response = array('response' => 'Projekts inserted');
+            $pdo->commit();
+        } catch (Exception $e) {
+            //On SQL Error
+            $pdo->rollBack();
+            $response = array('response' => 'There was an error with the SQL request');
+        }
+        echo $response['response'];
     }
 
     function createUsers($pdo, $logins) {
@@ -89,8 +115,9 @@
                 $insert_user_stmt->bindParam(':passhash', password_hash($myLogins[$i]['Password'], PASSWORD_DEFAULT));
 
                 $insert_user_stmt->execute();
+                echo "User Created \n";
             }
-            $response = array('response' => 'There was no Error');
+            $response = array('response' => 'Users inserted');
             $pdo->commit();
         } catch (Exception $e) {
             //On SQL Error
