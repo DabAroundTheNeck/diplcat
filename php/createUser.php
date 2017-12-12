@@ -23,13 +23,15 @@
 
     $get_userCount_stmt->closeCursor();
 
-    if ($get_userCount_stmt['Count'] <=0) {
+    echo $userCount['Count'];
+
+    if ($userCount['Count'] <= 0) {
         $insert_user_stmt = $pdo->prepare("insert into users(email, passhash) values(:email, :passhash)");
         $insert_user_stmt->bindParam(':email', $post_email);
         $insert_user_stmt->bindParam(':passhash', password_hash($post_password, PASSWORD_DEFAULT));
 
         $session_id = session_id();
-        $_SESSION['email'] = $userdata['email'];
+        $_SESSION['email'] = $post_password;
         $_SESSION['login'] = 1;
         setcookie("cookiezi", $_SESSION['login'], 0, "/diplcat");
 
