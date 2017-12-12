@@ -3,8 +3,35 @@
     $users = csvToArray("./Benutzer12.12.2017 10_53_33.csv");
     $themen = csvToArray("./Themen12.12.2017 10_50_45.csv");
 
-    for ($i=0; $i < count($users); $i++) {
-        //echo $users[$i]['Benutzername'];
+    $data = array();
+
+    for ($i=0; $i < count($themen); $i++) {
+        $data[$i] = array();
+        $data[$i]['Thema'] = trim($themen[$i]['Thema']);
+        $data[$i]['Email'] = trim(getStudentEmailFromName($themen[$i]['Vorname'], $themen[$i]['Nachname'], $users));
+        
+    }
+
+    function betreuerFromName($nachname, $users) {
+        for ($i=0; $i < count($users); $i++) {
+            $user = $users[$i];
+            if ($user['Nachname'] == $nachname || $user['Vorname'] == $nachname) {
+                if (trim($user['Status']) == 'Aktiv' && $user['Typ'] == 'betreuer') {
+                    return $user['Email'];
+                }
+            }
+        }
+    }
+
+    function getStudentEmailFromName($vorname, $nachname, $users) {
+        for ($i=0; $i < count($users); $i++) {
+            $user = $users[$i];
+            if (($user['Nachname'] == $nachname && $user['Vorname'] == $vorname) || ($user['Vorname'] == $nachname && $user['Nachname'] == $vorname)) {
+                if (trim($user['Status']) == 'Aktiv' && $user['Typ'] == 'schueler') {
+                    return $user['Email'];
+                }
+            }
+        }
     }
 
     function csvToArray($filename) {
@@ -20,13 +47,13 @@
         for ($i=0; $i < count($headers); $i++) {
             $headers[$i] = trim($headers[$i]);
         }
+        //Cutting off the first three chars due to ´╗┐ error
         $chars = str_split($headers[0]);
         $newChars = array();
         for ($i=3; $i < count($chars); $i++) {
             $newChars[$i-3] = $chars[$i];
         }
         $headers[0] = implode($newChars);
-        echo $headers[0];
 
         $data = array();
 
