@@ -1,5 +1,5 @@
 <?php
-    $users = csvToArray("Benutzer12.12.2017 10_53_33.csv");
+    $users = csvToArray("./Benutzer12.12.2017 10_53_33.csv");
 
     for ($i=0; $i < count($users); $i++) {
         //echo $users[$i];
