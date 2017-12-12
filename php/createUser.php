@@ -23,12 +23,12 @@
 
     $get_userCount_stmt->closeCursor();
 
-    echo $userCount['Count'];
-
     if ($userCount['Count'] <= 0) {
         $insert_user_stmt = $pdo->prepare("insert into users(email, passhash) values(:email, :passhash)");
         $insert_user_stmt->bindParam(':email', $post_email);
         $insert_user_stmt->bindParam(':passhash', password_hash($post_password, PASSWORD_DEFAULT));
+
+        $insert_user_stmt->execute();
 
         $session_id = session_id();
         $_SESSION['email'] = $post_password;
