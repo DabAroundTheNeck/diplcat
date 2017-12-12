@@ -36,3 +36,7 @@ function register() {
         }
     };
 }
+
+function addCard(id) {
+    document.getElementById(id).insertAdjacentHTML('beforeend', '<div class="card personcard"><img src="" alt="Image"><div class="cardStroke"></div><input type="text" name="" value=""></div>');
+}

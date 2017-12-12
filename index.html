@@ -27,7 +27,7 @@
                 </div>
 
                 <h3>Projektmitarbeiter</h3>
-                <div class="cardContainer">
+                <div class="cardContainer" id="workerCardContainer">
                     <div class="card personcard">
                         <img src="" alt="Image">
                         <div class="cardStroke"></div>
@@ -35,14 +35,14 @@
                     </div>
                 </div>
 
-                <button type="button" name="button" onclick="login()">Add</button>
+                <button type="button" name="button" onclick='addCard("workerCardContainer")'>Add</button>
 
             </section>
 
             <section id="technologies">
                 <h2>Technologien</h2>
 
-                <div class="cardContainer">
+                <div class="cardContainer" id="techCardContainer">
                     <div class="card personcard">
                         <img src="" alt="Image">
                         <div class="cardStroke"></div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <button type="button" name="button" onclick="register()">Add</button>
+                <button type="button" name="button" onclick='addCard("techCardContainer")'>Add</button>
 
             </section>
         </main>
