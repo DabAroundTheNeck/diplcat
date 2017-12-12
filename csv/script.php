@@ -42,6 +42,9 @@
     for ($i=0; $i < count($betreuerListe); $i++) {
         $logins[count($logins)]['Email'] = $betreuerListe[$i];
     }
+    for ($i=0; $i < count($logins); $i++) {
+        $logins[$i]['Password'] = generateRandomString();
+    }
 
     writeLogins($logins);
     writeDbData($data);
@@ -116,7 +119,6 @@
 
         $myfile = fopen("login.csv", "a") or die("Unable to open file!");
         for ($i=0; $i < count($logins); $i++) {
-            $logins[$i]['Password'] = generateRandomString();
             fwrite($myfile, $logins[$i]['Email'].";".$logins[$i]['Password']."\n");
         }
         fclose($myfile);
