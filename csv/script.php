@@ -1,18 +1,25 @@
 <?php
     include '../php/function.php';
 
-    $users = csvToArray("./Benutzer12.12.2017 10_53_33.csv");
-    $themen = csvToArray("./Themen12.12.2017 10_50_45.csv");
+    $pdo = create_pdo();
+
+    $users = csvToArray("./Benutzer.csv");
+    $themen = csvToArray("./Themen.csv");
 
     $data = array();
 
+    $logins = array();
     $betreuerListe = array();
 
     for ($i=0; $i < count($themen); $i++) {
+        $logins[$i] = array();
+
         $data[$i] = array();
         $data[$i]['Thema'] = trim($themen[$i]['Thema']);
         $data[$i]['Email'] = trim(getStudentEmailFromName($themen[$i]['Vorname'], $themen[$i]['Nachname'], $users));
+        $logins[$i]['Email'] = $data[$i]['Email'];
         $betreuer = betreuerFromName($themen[$i]['Betreuer'], $users);
+
         if (count($betreuer) > 1) {
             $data[$i]['Anmerkung'] = 'Lehrer für dieses Projekt überprüfen';
         } else {
@@ -32,30 +39,88 @@
         }
     }
 
-    $myfile = fopen("login.csv", "w") or die("Unable to open file!");
-    fwrite($myfile, "Email;Passwort\n");
-    fclose($myfile);
-
-    $myfile = fopen("login.csv", "a") or die("Unable to open file!");
-    for ($i=0; $i < count($data); $i++) {
-        $data[$i]['Password'] = uniqid();
-        fwrite($myfile, $data[$i]['Email'].";".$data[$i]['Password']."\n");
-
-    }
     for ($i=0; $i < count($betreuerListe); $i++) {
-        fwrite($myfile, $betreuerListe[$i].";ThisIsPasswort\n");
+        $logins[count($logins)]['Email'] = $betreuerListe[$i];
     }
-    fclose($myfile);
 
-    $myfile = fopen("DBFiles.csv", "w") or die("Unable to open file!");
-    fwrite($myfile, "Thema;Leiter;Betreuer;Anmerkung\n");
-    fclose($myfile);
+    writeLogins($logins);
+    writeDbData($data);
 
-    $myfile = fopen("DBFiles.csv", "a") or die("Unable to open file!");
-    for ($i=0; $i < count($data); $i++) {
-        fwrite($myfile, $data[$i]['Thema'].";".$data[$i]['Email'].";".$data[$i]['Betreuer'].";".$data[$i]['Anmerkung']."\n");
+    createUsers($pdo, $logins);
+    createProjekts($pdo, $data);
+
+    function createProjekts($pdo, $data) {
+
     }
-    fclose($myfile);
+
+    function createUsers($pdo, $logins) {
+        try {
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->beginTransaction();
+
+            //Prepared Statement for the SQL procedure
+            $get_userCount_stmt = $pdo->prepare("select email from users");
+            $get_userCount_stmt->execute();
+            $existingUsers = $get_userCount_stmt->fetch();
+            $get_userCount_stmt->closeCursor();
+
+            $myLogins = array();
+
+            for ($i=0; $i < count($logins); $i++) {
+                $x = 0;
+                for ($j=0; $j < count($existingUsers); $j++) {
+                    if ($logins[$i]['Email'] == $existingUsers[$j]['email']) {
+                        $x++;
+                    }
+                }
+                if ($x == 0) {
+                    $myLogins[$i] = $logins[$i];
+                }
+            }
+
+
+            $insert_user_stmt = $pdo->prepare("insert into users(email, passhash) values(:email, :passhash)");
+
+            for ($i=0; $i < count($myLogins); $i++) {
+                $insert_user_stmt->bindParam(':email', $myLogins[$i]['Email']);
+                $insert_user_stmt->bindParam(':passhash', password_hash($myLogins[$i]['Password'], PASSWORD_DEFAULT));
+
+                $insert_user_stmt->execute();
+            }
+            $response = array('response' => 'There was no Error');
+            $pdo->commit();
+        } catch (Exception $e) {
+            //On SQL Error
+            $pdo->rollBack();
+            $response = array('response' => 'There was an error with the SQL request');
+        }
+        echo $response['response'];
+    }
+
+    function writeDbData($data) {
+        $myfile = fopen("DBFiles.csv", "w") or die("Unable to open file!");
+        fwrite($myfile, "Thema;Leiter;Betreuer;Anmerkung\n");
+        fclose($myfile);
+
+        $myfile = fopen("DBFiles.csv", "a") or die("Unable to open file!");
+        for ($i=0; $i < count($data); $i++) {
+            fwrite($myfile, $data[$i]['Thema'].";".$data[$i]['Email'].";".$data[$i]['Betreuer'].";".$data[$i]['Anmerkung']."\n");
+        }
+        fclose($myfile);
+    }
+
+    function writeLogins($logins) {
+        $myfile = fopen("login.csv", "w") or die("Unable to open file!");
+        fwrite($myfile, "Email;Passwort\n");
+        fclose($myfile);
+
+        $myfile = fopen("login.csv", "a") or die("Unable to open file!");
+        for ($i=0; $i < count($logins); $i++) {
+            $logins[$i]['Password'] = generateRandomString();
+            fwrite($myfile, $logins[$i]['Email'].";".$logins[$i]['Password']."\n");
+        }
+        fclose($myfile);
+    }
 
     function betreuerFromName($nachname, $users) {
         $data = array();
@@ -113,5 +178,15 @@
         }
 
         return $data;
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 ?>
