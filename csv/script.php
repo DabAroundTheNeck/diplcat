@@ -1,9 +1,10 @@
 <?php
+
     $users = csvToArray("./Benutzer12.12.2017 10_53_33.csv");
     $themen = csvToArray("./Themen12.12.2017 10_50_45.csv");
 
-    for ($i=0; $i < count($themen); $i++) {
-        echo $themen[$i]['Abteilung'];
+    for ($i=0; $i < count($users); $i++) {
+        //echo $users[$i]['Benutzername'];
     }
 
     function csvToArray($filename) {
@@ -16,7 +17,17 @@
         }
         fclose($myfile);
         $headers = explode(";", $lines[0]);
+        for ($i=0; $i < count($headers); $i++) {
+            $headers[$i] = trim($headers[$i]);
+        }
+        $chars = str_split($headers[0]);
+        $newChars = array();
+        for ($i=3; $i < count($chars); $i++) {
+            $newChars[$i-3] = $chars[$i];
+        }
+        $headers[0] = implode($newChars);
         echo $headers[0];
+
         $data = array();
 
         for ($i=1; $i < count($lines)-1; $i++) {
