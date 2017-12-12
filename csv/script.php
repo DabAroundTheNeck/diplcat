@@ -16,6 +16,7 @@
         }
         fclose($myfile);
         $headers = explode(";", $lines[0]);
+        echo $headers[0];
         $data = array();
 
         for ($i=1; $i < count($lines)-1; $i++) {
