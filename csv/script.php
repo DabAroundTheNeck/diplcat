@@ -5,22 +5,73 @@
 
     $data = array();
 
+    $betreuerListe = array();
+
     for ($i=0; $i < count($themen); $i++) {
         $data[$i] = array();
         $data[$i]['Thema'] = trim($themen[$i]['Thema']);
         $data[$i]['Email'] = trim(getStudentEmailFromName($themen[$i]['Vorname'], $themen[$i]['Nachname'], $users));
-        
+        $betreuer = betreuerFromName($themen[$i]['Betreuer'], $users);
+        if (count($betreuer) > 1) {
+            $data[$i]['Anmerkung'] = 'Lehrer für dieses Projekt überprüfen';
+        }
+        $data[$i]['Betreuer'] = $betreuer[0];
+        for ($j=0; $j < count($betreuer); $j++) {
+            $x = 0;
+            for ($k=0; $k < count($betreuerListe); $k++) {
+                if ($betreuer[$j] == $betreuerListe[$k]) {
+                    $x = $x + 1;
+                }
+            }
+            if ($x == 0) {
+                $betreuerListe[count($betreuerListe)] = $betreuer[$j];
+            }
+        }
     }
 
+    $myfile = fopen("login.csv", "w") or die("Unable to open file!");
+    fwrite($myfile, "Email;Passwort\n");
+    fclose($myfile);
+
+    $myfile = fopen("login.csv", "a") or die("Unable to open file!");
+    for ($i=0; $i < count($data); $i++) {
+        fwrite($myfile, $data[$i]['Email'].";ThisIsPasswort\n");
+    }
+    for ($i=0; $i < count($betreuerListe); $i++) {
+        fwrite($myfile, $betreuerListe[$i].";ThisIsPasswort\n");
+    }
+    fclose($myfile);
+
+    $myfile = fopen("DBFiles.csv", "w") or die("Unable to open file!");
+    fwrite($myfile, "Thema;Leiter;Betreuer;Anmerkung\n");
+    fclose($myfile);
+
+    $myfile = fopen("DBFiles.csv", "a") or die("Unable to open file!");
+    for ($i=0; $i < count($data); $i++) {
+        fwrite($myfile, $data[$i]['Thema'].";".$data[$i]['Email'].";".$data[$i]['Betreuer'].";".$data[$i]['Anmerkung']."\n");
+    }
+    fclose($myfile);
+
+
+
+    $testFile = fopen("Test.txt", "r") or die("Unable");
+    //echo fread($testFile,filesize("Test.txt"));
+    fclose($testFile);
+
+    echo("ü");
+
+
     function betreuerFromName($nachname, $users) {
+        $data = array();
         for ($i=0; $i < count($users); $i++) {
             $user = $users[$i];
             if ($user['Nachname'] == $nachname || $user['Vorname'] == $nachname) {
                 if (trim($user['Status']) == 'Aktiv' && $user['Typ'] == 'betreuer') {
-                    return $user['Email'];
+                    $data[count($data)] = $user['Email'];
                 }
             }
         }
+        return $data;
     }
 
     function getStudentEmailFromName($vorname, $nachname, $users) {
