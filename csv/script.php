@@ -122,6 +122,7 @@
             $response = array('response' => 'There was an error with the SQL request');
         }
         echo $response['response'];
+        echo "\n";
     }
 
     function writeDbData($data) {
