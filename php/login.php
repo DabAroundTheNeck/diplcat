@@ -19,7 +19,7 @@
     $get_user_stmt->bindParam(':email', $post_email);
 
     $get_user_stmt->execute();
-    $userdata = $get_user_stmt->fetch();
+    $userdata = $get_user_stmt->fetch(PDO::FETCH_ASSOC);
 
     $get_user_stmt->closeCursor();
 
@@ -29,9 +29,10 @@
       $_SESSION['email'] = $userdata['email'];
       $_SESSION['login'] = 1;
       setcookie("cookiezi", $_SESSION['login'], 0, "/diplcat");
+      setcookie("thema", -1, 0, "/diplcat");
 
       //Return value on Success
-      $response = array('response' => 'There was no Error');
+      $response = array('response' => 'Success');
     } else {
       //Return value on false password verification
       $response = array('response' => 'Password verification failed');

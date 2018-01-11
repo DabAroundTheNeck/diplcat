@@ -1,17 +1,21 @@
 const DONE = 4; // readyState 4 means the request is done.
 const OK = 200; // status 200 is a successful return.
 
-function login() {
+function login(form) {
 
     var loginRequest = new XMLHttpRequest();
     loginRequest.open('POST', './php/login.php');
-    loginRequest.send('{"e":"email","pw":"password"}');
+    loginRequest.send('{"e":"'+form.email.value+'","pw":"'+form.psw.value+'"}');
     loginRequest.onreadystatechange = function () {
         if (loginRequest.readyState === DONE) {
             if (loginRequest.status === OK) {
-                console.log(loginRequest.responseText);
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 console.log(parsedResponse);
+                if (form.email.value.split("@")[1] == "htldornbirn.at") {
+                    window.location.pathname = "/diplcat/choice.html";
+                } else {
+                    window.location.pathname = "/diplcat/main.html";
+                }
             } else {
                 console.log('Error: ' + loginRequest.status); // An error occurred during the request.
             }
@@ -19,6 +23,7 @@ function login() {
     };
 }
 
+//Function is not used (There is no Registration)
 function register() {
 
     var loginRequest = new XMLHttpRequest();
@@ -27,7 +32,6 @@ function register() {
     loginRequest.onreadystatechange = function () {
         if (loginRequest.readyState === DONE) {
             if (loginRequest.status === OK) {
-                console.log(loginRequest.responseText);
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 console.log(parsedResponse);
             } else {
@@ -39,4 +43,87 @@ function register() {
 
 function addCard(id) {
     document.getElementById(id).insertAdjacentHTML('beforeend', '<div class="card personcard"><img src="" alt="Image"><div class="cardStroke"></div><input type="text" name="" value=""></div>');
+}
+
+function loadThemaChooser() {
+    if (getCookie('cookiezi') == 1) {
+        var themaRequest = new XMLHttpRequest();
+        themaRequest.open('POST', './php/getThemas.php');
+        themaRequest.send();
+        themaRequest.onreadystatechange = function () {
+            if (themaRequest.readyState === DONE) {
+                if (themaRequest.status === OK) {
+                    let parsedResponse = JSON.parse(themaRequest.responseText);
+                    console.log(parsedResponse);
+
+                    if (parsedResponse.themas != null) {
+                        for (var i = 0; i < parsedResponse.themas.length; i++) {
+                            document.getElementById('container').insertAdjacentHTML('beforeend', '<div><button onclick="setThemaCookie('+parsedResponse.themas[i].idthema+')">'+parsedResponse.themas[i].name+'</button></div>');
+                        }
+                    }
+                } else {
+                    console.log('Error: ' + loginRequest.status); // An error occurred during the request.
+                }
+            }
+        };
+    } else {
+        window.location.pathname = "/diplcat";
+    }
+}
+
+function setThemaCookie(themaId) {
+    setCookie("thema", themaId, 0);
+    window.location.pathname = "/diplcat/main.html";
+}
+
+function loadMain() {
+    if (getCookie('cookiezi') == 1) {
+        var emailS;
+        if (getCookie('thema') == -1) {
+            emailS = 0;
+        } else {
+            emailS = 1;
+        }
+        var themaRequest = new XMLHttpRequest();
+        themaRequest.open('POST', './php/getThemaById.php');
+        themaRequest.send('{"id":"'+getCookie('thema')+'", "emailS":"'+emailS+'"}');
+        themaRequest.onreadystatechange = function () {
+            if (themaRequest.readyState === DONE) {
+                if (themaRequest.status === OK) {
+                    data = JSON.parse(themaRequest.responseText);
+                    data = data.thema;
+                } else {
+                    console.log('Error: ' + loginRequest.status); // An error occurred during the request.
+                }
+            }
+        };
+
+        //Now we have the data
+
+        console.log(data);
+
+    } else {
+        window.location.pathname = "/diplcat";
+    }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, ex) {
+    var expires = "expires="+ ex;
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/diplcat";
 }

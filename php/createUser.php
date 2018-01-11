@@ -19,7 +19,7 @@
     $get_userCount_stmt->bindParam(':email', $post_email);
 
     $get_userCount_stmt->execute();
-    $userCount = $get_userCount_stmt->fetch();
+    $userCount = $get_userCount_stmt->fetch(PDO::FETCH_ASSOC);
 
     $get_userCount_stmt->closeCursor();
 

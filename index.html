@@ -9,7 +9,26 @@
 
     </head>
     <body>
+        <form action="javascript:;" onsubmit="return login(this);">
 
+            <div class="Login">
+                <div class="Email">
+                    <label><b>Email</b></label>
+                    <input id="email" type="text" placeholder="Enter Email" name="email" required>
+                </div>
+                <div class="Password">
+                    <label><b>Password</b></label>
+                    <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+                </div>
+                <div class="Button">
+                    <button type="submit">Login</button>
+                    <input type="checkbox" checked="checked"> Remember me
+                </div>
+                <div class="PasswordForgot">
+                    <span class="psw"><a href="#">Forgot password?</a></span>
+                </div>
+            </div>
+        </form>
         <script src="./js/app.js" charset="utf-8"></script>
     </body>
 </html>
