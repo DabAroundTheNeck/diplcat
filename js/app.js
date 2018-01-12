@@ -5,6 +5,7 @@ function login(form) {
 
     var loginRequest = new XMLHttpRequest();
     loginRequest.open('POST', './php/login.php');
+    console.log(form.email);
     loginRequest.send('{"e":"'+form.email.value+'","pw":"'+form.psw.value+'"}');
     loginRequest.onreadystatechange = function () {
         if (loginRequest.readyState === DONE) {
