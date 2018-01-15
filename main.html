@@ -20,9 +20,10 @@
                 <h3>Projektleiter</h3>
                 <div class="cardContainer">
                     <div class="card personcard">
-                        <img src="" alt="Image">
+                        <img src="" alt="Image" onclick="document.getElementById('projektLeiterImageForm').click()" id="projektLeiterImage">
+                        <input type="file" name="image" value="" id="projektLeiterImageForm" onchange="changeImage('projektLeiterImage')">
                         <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
+                        <input id="projektleiterText" type="text" name="text" value="">
                     </div>
                 </div>
 
@@ -51,8 +52,10 @@
                 </div>
 
                 <button type="button" name="button" onclick='addCard("techCardContainer")'>Add</button>
-
             </section>
+            <div>
+                <button type="button" name="button" onclick='save()'>Save</button>
+            </div>
         </main>
         <footer>
 

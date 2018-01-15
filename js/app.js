@@ -85,6 +85,7 @@ function loadMain() {
         } else {
             emailS = 1;
         }
+        var data;
         var themaRequest = new XMLHttpRequest();
         themaRequest.open('POST', './php/getThemaById.php');
         themaRequest.send('{"id":"'+getCookie('thema')+'", "emailS":"'+emailS+'"}');
@@ -105,6 +106,15 @@ function loadMain() {
 
     } else {
         window.location.pathname = "/diplcat";
+    }
+}
+
+function save() {
+    var plText = document.getElementById('projektleiterText').value;
+    var pmTexts;
+    var allWorkers = document.getElementById('workerCardContainer').children;
+    for (var i = 0; i < allWorkers.length; i++) {
+        console.log(allWorkers[i].children[2].value);
     }
 }
 
