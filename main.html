@@ -11,10 +11,12 @@
     <body onload="loadMain()">
         <header>
             <section class="centered">
-                <h1 id="Title">Diplomarbeitskatalog</h1>
+                <h1 id="title">Diplomarbeitskatalog</h1>
             </section>
         </header>
         <main class="centered">
+            <img src="" alt="Image" onclick="document.getElementById('projektLeiterImageForm').click()" id="projektLeiterImage">
+            <input type="file" name="image" value="" id="projektLeiterImageForm" onchange="changeImage('projektLeiterImage')">
             <section id="person">
                 <h2>Projektteam</h2>
                 <h3>Projektleiter</h3>
@@ -32,14 +34,36 @@
                     <div class="card personcard">
                         <img src="" alt="Image">
                         <div class="cardStroke"></div>
+                        <input class="textfield" type="text" name="" value="">
+                    </div>
+                </div>
+
+                <button type="button" name="button" onclick='addWorker()'>Add</button>
+
+            </section>
+            <section id="problem">
+                <h2>Problemstellung</h2>
+
+                <div class="cardContainer" id="problemCardContainer">
+                    <div class="card personcard">
+                        <div class="cardStroke"></div>
                         <input type="text" name="" value="">
                     </div>
                 </div>
 
-                <button type="button" name="button" onclick='addCard("workerCardContainer")'>Add</button>
-
             </section>
 
+            <section id="goal">
+                <h2>Zielsetzung</h2>
+
+                <div class="cardContainer" id="goalCardContainer">
+                    <div class="card personcard">
+                        <div class="cardStroke"></div>
+                        <input type="text" name="" value="">
+                    </div>
+                </div>
+
+            </section>
             <section id="technologies">
                 <h2>Technologien</h2>
 
@@ -52,6 +76,29 @@
                 </div>
 
                 <button type="button" name="button" onclick='addCard("techCardContainer")'>Add</button>
+            </section>
+            <section id="prototype">
+                <h2>Prototype</h2>
+
+                <div class="cardContainer" id="prototypeCardContainer">
+                    <div class="card personcard">
+                        <img src="" alt="Image">
+                        <div class="cardStroke"></div>
+                        <input type="text" name="" value="">
+                    </div>
+                </div>
+
+            </section>
+            <section id="results">
+                <h2>Ergebnisse</h2>
+
+                <div class="cardContainer" id="resultsCardContainer">
+                    <div class="card personcard">
+                        <div class="cardStroke"></div>
+                        <input type="text" name="" value="">
+                    </div>
+                </div>
+
             </section>
             <div>
                 <button type="button" name="button" onclick='save()'>Save</button>

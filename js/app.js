@@ -42,10 +42,6 @@ function register() {
     };
 }
 
-function addCard(id) {
-    document.getElementById(id).insertAdjacentHTML('beforeend', '<div class="card personcard"><img src="" alt="Image"><div class="cardStroke"></div><input type="text" name="" value=""></div>');
-}
-
 function loadThemaChooser() {
     if (getCookie('cookiezi') == 1) {
         var themaRequest = new XMLHttpRequest();
@@ -93,16 +89,25 @@ function loadMain() {
             if (themaRequest.readyState === DONE) {
                 if (themaRequest.status === OK) {
                     data = JSON.parse(themaRequest.responseText);
-                    data = data.thema;
+                    thema = data.themaRe;
+
+                    document.getElementById('title').innerHTML = thema.name;
+
+                    for (var i = 0; i < thema.mitarbeiter.length-1; i++) {
+                        addWorker();
+                    }
+
+                    for (var i = 0; i < thema.mitarbeiter.length; i++) {
+                        thema.mitarbeiter[i];
+                    }
+
                 } else {
                     console.log('Error: ' + loginRequest.status); // An error occurred during the request.
                 }
             }
         };
-
         //Now we have the data
 
-        console.log(data);
 
     } else {
         window.location.pathname = "/diplcat";
@@ -116,6 +121,7 @@ function save() {
     for (var i = 0; i < allWorkers.length; i++) {
         console.log(allWorkers[i].children[2].value);
     }
+
 }
 
 function getCookie(cname) {
@@ -137,4 +143,27 @@ function getCookie(cname) {
 function setCookie(cname, cvalue, ex) {
     var expires = "expires="+ ex;
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/diplcat";
+}
+
+function addWorker() {
+    var workerHTML = '<div class="card personcard"><img src="" alt="Image"><div class="cardStroke"></div><input type="text" name="" value=""></div>';
+    document.getElementById('workerCardContainer').insertAdjacentHTML('beforeend', workerHTML);
+}
+
+function changeWorker(img, text, i) {
+    var allWorkers = document.getElementById('workerCardContainer').children;
+
+    if (i+1 > allWorkers.length) {
+        console.log("Cant do shit");
+    } else {
+        var worker = allWorkers[i];
+        var imgE = worker.getElementsByTagName('img');
+        var textE = worker.getElementsByClassName('textfield')[0];
+        if (img != "") {
+            imgE.setAttribute('src', img);
+        }
+        if (text != "") {
+            textE.setAttribute('value', text);
+        }
+    }
 }

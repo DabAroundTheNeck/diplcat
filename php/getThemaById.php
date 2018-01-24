@@ -47,33 +47,7 @@
                         'technologies' => array());
 
         $thema = $thema['idthema'];
-
-        $get_mitarbeiter_stmt = $pdo->prepare('SELECT * FROM mitarbeiter where themas_idthema = :id;');
-        $get_mitarbeiter_stmt->bindParam(':id', $thema);
-
-        $get_mitarbeiter_stmt->execute();
-        $mitarbeiter = $get_mitarbeiter_stmt->fetchAll(PDO::FETCH_ASSOC);
-        $get_mitarbeiter_stmt->closeCursor();
-
-        $get_technologies_stmt = $pdo->prepare('SELECT * FROM technologies where themas_idthema = :id;');
-        $get_technologies_stmt->bindParam(':id', $thema);
-
-        $get_technologies_stmt->execute();
-        $technologies = $get_technologies_stmt->fetchAll(PDO::FETCH_ASSOC);
-        $get_technologies_stmt->closeCursor();
-
-        for ($i=0; $i < count($mitarbeiter); $i++) {
-            $filename = $mitarbeiter[$i]['text'];
-            if(file_exists($filename)){
-                $fh = fopen($filename, "rb");
-                $text = fread($fh, filesize($filename));
-                fclose($fh);
-            }else{
-                $text = null;
-            }
-            $themaRe['mitarbeiter'][$i]['text'] = $text;
-            $themaRe['mitarbeiter'][$i]['image'] = $mitarbeiter[$i]['image'];
-        }
+        
 
         for ($i=0; $i < count($technologies); $i++) {
             $filename = $technologies[$i]['text'];
