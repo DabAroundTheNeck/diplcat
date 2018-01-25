@@ -168,7 +168,7 @@ function changeWorker(img, text, i) {
     }
 }
 
-function changeImage(img, evt) {
+document.getElementById('logoForm').onchange = function (evt) {
     var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
 
@@ -176,7 +176,7 @@ function changeImage(img, evt) {
     if (FileReader && files && files.length) {
         var fr = new FileReader();
         fr.onload = function () {
-            document.getElementById(img).src = fr.result;
+            document.getElementById(logo).src = fr.result;
         }
         fr.readAsDataURL(files[0]);
     }
