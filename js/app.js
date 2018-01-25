@@ -178,8 +178,9 @@ function changeImage(event, imgId) {
         var fr = new FileReader();
         fr.onload = function () {
             document.getElementById(imgId).src = fr.result;
+            base64 = fr.result;
         }
-        base64 = fr.readAsDataURL(files[0]);
+        fr.readAsDataURL(files[0]);
     }
     console.log(base64);
 
