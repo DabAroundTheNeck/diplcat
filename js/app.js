@@ -181,14 +181,14 @@ function changeImage(event, imgId) {
             var base64 = document.getElementById(imgId).src;
             console.log(base64);
 
-            var loginRequest = new XMLHttpRequest();
-            loginRequest.open('POST', './php/imageChange.php');
-            loginRequest.send('{"name":"'+imgId+'","image":"'+base64+'"}');
-            loginRequest.onreadystatechange = function () {
-                if (loginRequest.readyState === DONE) {
-                    if (loginRequest.status === OK) {
-                        let parsedResponse = JSON.parse(loginRequest.responseText);
-
+            var imageRequest = new XMLHttpRequest();
+            imageRequest.open('POST', './php/imageChange.php');
+            imageRequest.send('{"name":"'+imgId+'","image":"'+base64+'"}');
+            imageRequest.onreadystatechange = function () {
+                if (imageRequest.readyState === DONE) {
+                    if (imageRequest.status === OK) {
+                        let parsedResponse = JSON.parse(imageRequest.responseText);
+                        console.log(parsedResponse);
                     } else {
                         console.log('Error: ' + loginRequest.status); // An error occurred during the request.
                     }
