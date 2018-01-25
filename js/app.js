@@ -168,18 +168,6 @@ function changeWorker(img, text, i) {
     }
 }
 
-function changeImage(element) {
-    var loginRequest = new XMLHttpRequest();
-    loginRequest.open('POST', './php/imageChange.php');
-    loginRequest.send('{}');
-    loginRequest.onreadystatechange = function () {
-        if (loginRequest.readyState === DONE) {
-            if (loginRequest.status === OK) {
-                let parsedResponse = JSON.parse(loginRequest.responseText);
-                console.log(parsedResponse);
-            } else {
-                console.log('Error: ' + loginRequest.status); // An error occurred during the request.
-            }
-        }
-    };
+function changeImage(img, input) {
+    console.log(document.getElementById(inpput).value);
 }
