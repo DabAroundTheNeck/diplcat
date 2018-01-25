@@ -173,15 +173,14 @@ function changeImage(event, imgId) {
         files = tgt.files;
 
     // FileReader support
-    var base64;
+
     if (FileReader && files && files.length) {
         var fr = new FileReader();
         fr.onload = function () {
             document.getElementById(imgId).src = fr.result;
-            base64 = fr.result;
         }
         fr.readAsDataURL(files[0]);
     }
+    var base64 = document.getElementById(imgId).getAttribute('src');
     console.log(base64);
-
 }
