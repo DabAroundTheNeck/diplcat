@@ -7,7 +7,7 @@
         $post_name = json_decode($post_data)->{'name'};
         $post_image = json_decode($post_data)->{'image'};
 
-        define('UPLOAD_DIR', 'data/');
+        define('UPLOAD_DIR', './data/');
         $image_parts = explode(";base64,", $post_image);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
