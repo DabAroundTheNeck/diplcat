@@ -75,7 +75,7 @@
         } catch (Exception $e) {
             //On SQL Error
             $pdo->rollBack();
-            $response = array('response' => 'InsertLehrer: There was an error with the SQL request Error: ' + $e);
+            $response = array('response' => 'InsertLehrer: There was an error with the SQL request Error: '.$e);
         }
         echo $response['response'];
     }
@@ -109,8 +109,9 @@
             $insert_user_stmt = $pdo->prepare("insert into users(email, passhash) values(:email, :passhash)");
 
             for ($i=0; $i < count($myLogins); $i++) {
+                $passHash = password_hash($myLogins[$i]['Password'], PASSWORD_DEFAULT);
                 $insert_user_stmt->bindParam(':email', $myLogins[$i]['Email']);
-                $insert_user_stmt->bindParam(':passhash', password_hash($myLogins[$i]['Password'], PASSWORD_DEFAULT));
+                $insert_user_stmt->bindParam(':passhash', $passHash);
 
                 $insert_user_stmt->execute();
             }
@@ -119,7 +120,7 @@
         } catch (Exception $e) {
             //On SQL Error
             $pdo->rollBack();
-            $response = array('response' => 'InsertUser: There was an error with the SQL request Error: ' + $e);
+            $response = array('response' => 'InsertUser: There was an error with the SQL request Error: '.$e);
         }
         echo $response['response'];
         echo "\n";
