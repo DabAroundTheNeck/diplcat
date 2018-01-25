@@ -180,7 +180,7 @@ function changeImage(event, imgId) {
             document.getElementById(imgId).src = fr.result;
         }
         fr.readAsDataURL(files[0]);
+        var base64 = document.getElementById(imgId).src;
+        console.log(base64);
     }
-    var base64 = document.getElementById(imgId).src;
-    console.log(base64);
 }
