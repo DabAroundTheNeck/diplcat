@@ -169,5 +169,5 @@ function changeWorker(img, text, i) {
 }
 
 function changeImage(img, input) {
-    console.log(document.getElementById(inpput).value);
+    console.log(document.getElementById(input).value);
 }
