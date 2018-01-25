@@ -176,7 +176,7 @@ document.getElementById('logoForm').onchange = function (evt) {
     if (FileReader && files && files.length) {
         var fr = new FileReader();
         fr.onload = function () {
-            document.getElementById(logo).src = fr.result;
+            document.getElementById('logo').src = fr.result;
         }
         fr.readAsDataURL(files[0]);
     }
