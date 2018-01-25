@@ -7,15 +7,14 @@
         $post_name = json_decode($post_data)->{'name'};
         $post_image = json_decode($post_data)->{'image'};
 
-        define('UPLOAD_DIR', 'data/');
         $image_parts = explode(";base64,", $post_image);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
-        $file = UPLOAD_DIR . $post_name . '.png';
+        $file = $post_name . '.png';
         file_put_contents($file, $image_base64);
 
-        $response = array('response' => 'File was saved as: ' . $file);
+        $response = array('response' => 'File was saved as: ' . $image_type);
 
     } else {
         $response = array('response' => 'Not logged in correctly');
