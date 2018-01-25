@@ -168,15 +168,15 @@ function changeWorker(img, text, i) {
     }
 }
 
-document.getElementById('logoForm').onchange = function (evt) {
-    var tgt = evt.target || window.event.srcElement,
+function changeImage(event, imgId) {
+    var tgt = event.target || window.event.srcElement,
         files = tgt.files;
 
     // FileReader support
     if (FileReader && files && files.length) {
         var fr = new FileReader();
         fr.onload = function () {
-            document.getElementById('logo').src = fr.result;
+            document.getElementById(imgId).src = fr.result;
         }
         fr.readAsDataURL(files[0]);
     }
