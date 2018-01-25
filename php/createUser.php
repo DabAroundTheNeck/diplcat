@@ -33,7 +33,7 @@
         $session_id = session_id();
         $_SESSION['email'] = $post_password;
         $_SESSION['login'] = 1;
-        setcookie("cookiezi", $_SESSION['login'], 0, "/diplcat");
+        setcookie("cookiezi", $_SESSION['login'], 0, "/diplom");
 
         $response = array('response' => 'There was no Error');
     } else {

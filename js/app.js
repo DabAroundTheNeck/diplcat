@@ -13,9 +13,9 @@ function login(form) {
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 console.log(parsedResponse);
                 if (form.email.value.split("@")[1] == "htldornbirn.at") {
-                    window.location.pathname = "/diplcat/choice.html";
+                    window.location.pathname = "/diplom/choice.html";
                 } else {
-                    window.location.pathname = "/diplcat/main.html";
+                    window.location.pathname = "/diplom/main.html";
                 }
             } else {
                 console.log('Error: ' + loginRequest.status); // An error occurred during the request.
@@ -64,13 +64,13 @@ function loadThemaChooser() {
             }
         };
     } else {
-        window.location.pathname = "/diplcat";
+        window.location.pathname = "/diplom";
     }
 }
 
 function setThemaCookie(themaId) {
     setCookie("thema", themaId, 0);
-    window.location.pathname = "/diplcat/main.html";
+    window.location.pathname = "/diplom/main.html";
 }
 
 function loadMain() {
@@ -110,7 +110,7 @@ function loadMain() {
 
 
     } else {
-        window.location.pathname = "/diplcat";
+        window.location.pathname = "/diplom";
     }
 }
 
@@ -142,7 +142,7 @@ function getCookie(cname) {
 
 function setCookie(cname, cvalue, ex) {
     var expires = "expires="+ ex;
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/diplcat";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/diplom";
 }
 
 function addWorker() {

@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `diplomkatalog`.`themas` ;
 
 CREATE TABLE IF NOT EXISTS `diplomkatalog`.`themas` (
   `idthema` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `leiter` VARCHAR(100) NOT NULL,
   `betreuer` VARCHAR(100) NOT NULL,
   `textFile` VARCHAR(256) NULL,

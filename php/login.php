@@ -28,8 +28,8 @@
       //Setting Session varibles
       $_SESSION['email'] = $userdata['email'];
       $_SESSION['login'] = 1;
-      setcookie("cookiezi", $_SESSION['login'], 0, "/diplcat");
-      setcookie("thema", -1, 0, "/diplcat");
+      setcookie("cookiezi", $_SESSION['login'], 0, "/diplom");
+      setcookie("thema", -1, 0, "/diplom");
 
       //Return value on Success
       $response = array('response' => 'Success');
