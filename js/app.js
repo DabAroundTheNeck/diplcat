@@ -179,7 +179,6 @@ function changeImage(event, imgId) {
         fr.onload = function () {
             document.getElementById(imgId).src = fr.result;
             var base64 = document.getElementById(imgId).src;
-            console.log(base64);
 
             var imageRequest = new XMLHttpRequest();
             imageRequest.open('POST', './php/imageChange.php');
