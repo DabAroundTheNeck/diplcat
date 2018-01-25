@@ -75,7 +75,7 @@
         } catch (Exception $e) {
             //On SQL Error
             $pdo->rollBack();
-            $response = array('response' => 'InsertLehrer: There was an error with the SQL request');
+            $response = array('response' => 'InsertLehrer: There was an error with the SQL request Error: ' + $e);
         }
         echo $response['response'];
     }
@@ -119,7 +119,7 @@
         } catch (Exception $e) {
             //On SQL Error
             $pdo->rollBack();
-            $response = array('response' => 'InsertUser: There was an error with the SQL request');
+            $response = array('response' => 'InsertUser: There was an error with the SQL request Error: ' + $e);
         }
         echo $response['response'];
         echo "\n";
