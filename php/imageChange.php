@@ -11,7 +11,7 @@
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
-        $file = $post_name . '.png';
+        $file = 'data/' . $post_name . '.' . $image_type;
         file_put_contents($file, $image_base64);
 
         $response = array('response' => 'File was saved as: ' . $image_type);
