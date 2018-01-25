@@ -173,17 +173,14 @@ function changeImage(event, imgId) {
         files = tgt.files;
 
     // FileReader support
+    var base64;
     if (FileReader && files && files.length) {
         var fr = new FileReader();
         fr.onload = function () {
             document.getElementById(imgId).src = fr.result;
         }
-        fr.readAsDataURL(files[0]);
+        base64 = fr.readAsDataURL(files[0]);
     }
+    console.log(base64);
 
-    // Not supported
-    else {
-        // fallback -- perhaps submit the input to an iframe and temporarily store
-        // them on the server until the user's session ends.
-    }
 }
