@@ -15,7 +15,7 @@
         $file = UPLOAD_DIR . $post_name . '.png';
         file_put_contents($file, $image_base64);
 
-        $response = array('response' => 'File was saved as: ' . $file . ' the content was: ' . $image_base64);
+        $response = array('response' => 'File was saved as: ' . $file);
 
     } else {
         $response = array('response' => 'Not logged in correctly');
