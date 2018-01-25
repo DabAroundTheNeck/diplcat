@@ -181,6 +181,6 @@ function changeImage(event, imgId) {
         }
         fr.readAsDataURL(files[0]);
     }
-    var base64 = document.getElementById(imgId).getAttribute('src');
+    var base64 = document.getElementById(imgId).src;
     console.log(base64);
 }
