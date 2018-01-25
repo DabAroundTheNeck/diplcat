@@ -169,5 +169,6 @@ function changeWorker(img, text, i) {
 }
 
 function changeImage(img, input) {
-    console.log(document.getElementById(input).value);
+    var fakepath = document.getElementById(input).value;
+    document.getElementById(img).setAttribute('src', fakepath);
 }
