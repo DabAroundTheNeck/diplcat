@@ -3,49 +3,20 @@
     include 'function.php';
     if ($_SESSION['login'] == 1) {
 
-        $target_dir = "data/";
-        $target_file = $target_dir . basename($_FILES["logoimage"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $response = array('response' => $_FILES);
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["logoimage"]["tmp_name"]);
-            if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-        }
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
-        }
-        // Check file size
-        if ($_FILES["logoimage"]["size"] > 500000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-        // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["logoimage"]["tmp_name"], $target_file)) {
-                echo "The file ". basename( $_FILES["logoimage"]["name"]). " has been uploaded.";
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
-        }
+        $post_data = file_get_contents("php://input");
+        $post_name = json_decode($post_data)->{'name'};
+        $post_image = json_decode($post_data)->{'image'};
+
+        define('UPLOAD_DIR', 'data/');
+        $image_parts = explode(";base64,", $post_image);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $file = UPLOAD_DIR . $post_name . '.png';
+        file_put_contents($file, $image_base64);
+
+        $response = array('response' => 'File was saved as: ' . $file);
+
     } else {
         $response = array('response' => 'Not logged in correctly');
     }

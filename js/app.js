@@ -180,8 +180,22 @@ function changeImage(event, imgId) {
             document.getElementById(imgId).src = fr.result;
             var base64 = document.getElementById(imgId).src;
             console.log(base64);
+
+            var loginRequest = new XMLHttpRequest();
+            loginRequest.open('POST', './php/imageChange.php');
+            loginRequest.send('{"name":"'+imgId+'","image":"'+base64+'"}');
+            loginRequest.onreadystatechange = function () {
+                if (loginRequest.readyState === DONE) {
+                    if (loginRequest.status === OK) {
+                        let parsedResponse = JSON.parse(loginRequest.responseText);
+
+                    } else {
+                        console.log('Error: ' + loginRequest.status); // An error occurred during the request.
+                    }
+                }
+            };
+
         }
         fr.readAsDataURL(files[0]);
-
     }
 }
