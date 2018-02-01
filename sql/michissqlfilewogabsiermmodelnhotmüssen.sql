@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS `diplomkatalog`.`themas` (
   `name` VARCHAR(255) NOT NULL,
   `leiter` VARCHAR(100) NOT NULL,
   `betreuer` VARCHAR(100) NOT NULL,
-  `textFile` VARCHAR(256) NULL,
-  `imageFile` VARCHAR(256) NULL,
   PRIMARY KEY (`idthema`),
   INDEX `fk_themas_users_idx` (`leiter` ASC),
   INDEX `fk_themas_users1_idx` (`betreuer` ASC),

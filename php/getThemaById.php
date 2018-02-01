@@ -77,6 +77,9 @@
         */
         $response = array('response' => 'No Errors', 'themaRe' => $themaRe);
 
+
+        $_SESSION['leiter'] = $themaRe['leiter'];
+
         $pdo->commit();
       } catch (Exception $e) {
         //On SQL Error
