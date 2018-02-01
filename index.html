@@ -3,32 +3,29 @@
     <head>
         <meta charset="utf-8">
         <title>Login - Diplomarbeitskatalog</title>
-        <link rel="stylesheet" href="./css/master.css">
+        <link rel="stylesheet" href="./css/login.css">
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Cantarell" rel="stylesheet">
 
     </head>
     <body>
+      <div class="centered">
         <form action="javascript:;" onsubmit="return login(this);">
-
-            <div class="Login">
-                <div class="Email">
-                    <label><b>Email</b></label>
+            <div class="login">
+              <h1>Diplomarbeitskatalog</h1>
+                <div class="email">
+                    <h2>Email</h2>
                     <input id="email" type="text" value="nina.schmid@student.htldornbirn.at" placeholder="Enter Email" name="email" required>
                 </div>
-                <div class="Password">
-                    <label><b>Password</b></label>
-                    <input id="password" type="password" placeholder="Enter Password" name="psw" value="yGJckzuZTG" required>
+                <div class="password">
+                    <h2>Password</h2>
+                    <input id="password" type="password" placeholder="Password" name="psw" value="yGJckzuZTG" required>
+                    <button type="submit" name="button">Login</button>
                 </div>
-                <div class="Button">
-                    <button type="submit">Login</button>
-                    <input type="checkbox" checked="checked"> Remember me
-                </div>
-                <div class="PasswordForgot">
-                    <span class="psw"><a href="#">Forgot password?</a></span>
-                </div>
+
             </div>
         </form>
+      </div>
         <script src="./js/app.js" charset="utf-8"></script>
     </body>
 </html>
