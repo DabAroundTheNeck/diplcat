@@ -47,7 +47,7 @@
                         'technologies' => array());
 
         $thema = $thema['idthema'];
-        
+
 
         for ($i=0; $i < count($technologies); $i++) {
             $filename = $technologies[$i]['text'];

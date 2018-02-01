@@ -12,7 +12,7 @@ function login(form) {
             if (loginRequest.status === OK) {
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 console.log(parsedResponse);
-                if (form.email.value.split("@")[1] == "htldornbirn.at") {
+                if (form.email.value.split("@")[1] == "htldornbirn.at") {   //If Email Ends on @htldornbirn.at its a teacher -> relocate to choice.html
                     window.location.pathname = "/diplom/choice.html";
                 } else {
                     window.location.pathname = "/diplom/main.html";
@@ -23,6 +23,8 @@ function login(form) {
         }
     };
 }
+
+
 
 //Function is not used (There is no Registration)
 function register() {
@@ -42,6 +44,8 @@ function register() {
     };
 }
 
+
+
 function loadThemaChooser() {
     if (getCookie('cookiezi') == 1) {
         var themaRequest = new XMLHttpRequest();
@@ -55,7 +59,9 @@ function loadThemaChooser() {
 
                     if (parsedResponse.themas != null) {
                         for (var i = 0; i < parsedResponse.themas.length; i++) {
-                            document.getElementById('container').insertAdjacentHTML('beforeend', '<div><button onclick="setThemaCookie('+parsedResponse.themas[i].idthema+')">'+parsedResponse.themas[i].name+'</button></div>');
+                            document.getElementById('container').insertAdjacentHTML('beforeend', '<div><button onclick="setThemaCookie('+
+                                                                                                    parsedResponse.themas[i].idthema+')">'+parsedResponse.themas[i].name+
+                                                                                                    '</button></div>');
                         }
                     }
                 } else {
@@ -92,7 +98,7 @@ function loadMain() {
                     thema = data.themaRe;
 
                     document.getElementById('title').innerHTML = thema.name;
-
+                    /*
                     for (var i = 0; i < thema.mitarbeiter.length-1; i++) {
                         addWorker();
                     }
@@ -100,15 +106,12 @@ function loadMain() {
                     for (var i = 0; i < thema.mitarbeiter.length; i++) {
                         thema.mitarbeiter[i];
                     }
-
+                    */
                 } else {
                     console.log('Error: ' + loginRequest.status); // An error occurred during the request.
                 }
             }
         };
-        //Now we have the data
-
-
     } else {
         window.location.pathname = "/diplom";
     }
@@ -121,7 +124,6 @@ function save() {
     for (var i = 0; i < allWorkers.length; i++) {
         console.log(allWorkers[i].children[2].value);
     }
-
 }
 
 function getCookie(cname) {
