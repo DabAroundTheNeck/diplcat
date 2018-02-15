@@ -28,7 +28,7 @@
       //Setting Session varibles
       $_SESSION['email'] = $userdata['email'];
       $_SESSION['login'] = 1;
-      setcookie("cookiezi", $_SESSION['login'], 0, "/diplom");
+      setcookie("cookiezi", $_SESSION['login'], 0, "/user/diplom");
       setcookie("thema", -1, 0, "/diplom");
 
       //Return value on Success
