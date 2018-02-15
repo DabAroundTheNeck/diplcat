@@ -146,7 +146,7 @@ function getCookie(cname) {
 
 function setCookie(cname, cvalue, ex) {
     var expires = "expires="+ ex;
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/diplom";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/user/diplom";
 }
 
 function addWorker() {
