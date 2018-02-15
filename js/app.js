@@ -15,9 +15,9 @@ function login(form) {
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 console.log(parsedResponse);
                 if (form.email.value.split("@")[1] == "htldornbirn.at") {   //If Email Ends on @htldornbirn.at its a teacher -> relocate to choice.html
-                    window.location.pathname = "/diplom/choice.html";
+                    window.location.pathname = "/user/diplom/choice.html";
                 } else {
-                    window.location.pathname = "/diplom/main.html";
+                    window.location.pathname = "/user/diplom/main.html";
                 }
             } else {
                 console.log('Error: ' + loginRequest.status); // An error occurred during the request.
