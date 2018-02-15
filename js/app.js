@@ -1,6 +1,8 @@
 const DONE = 4; // readyState 4 means the request is done.
 const OK = 200; // status 200 is a successful return.
 
+//Current Password: KTMgOQOMtf
+
 function login(form) {
 
     var loginRequest = new XMLHttpRequest();
@@ -70,13 +72,13 @@ function loadThemaChooser() {
             }
         };
     } else {
-        window.location.pathname = "/diplom";
+        window.location.pathname = "/user/diplom/index.html";
     }
 }
 
 function setThemaCookie(themaId) {
     setCookie("thema", themaId, 0);
-    window.location.pathname = "/diplom/main.html";
+    window.location.pathname = "/user/diplom/main.html";
 }
 
 function loadMain() {
@@ -113,7 +115,7 @@ function loadMain() {
             }
         };
     } else {
-        window.location.pathname = "/diplom";
+        window.location.pathname = "/user/diplom/index.html";
     }
 }
 
