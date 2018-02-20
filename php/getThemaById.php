@@ -5,6 +5,25 @@
       //Creating a connection to the Database
       $pdo = create_pdo();
 
+      $emptyFile = '{
+          "logo":"",
+          "projektleiter":{
+              "text":"",
+              "image":""
+          },
+          "mitarbeiter":[
+          ],
+          "problemstellung":"",
+          "zielsetzung":"",
+          "technologien":[
+          ],
+          "prototype":{
+              "text":"",
+              "image":""
+          },
+          "ergebnisse":""
+      }';
+
       try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->beginTransaction();
@@ -28,17 +47,40 @@
         $thema = $get_thema_stmt->fetch(PDO::FETCH_ASSOC);
         $get_thema_stmt->closeCursor();
 
-        $themaRe = array('name' => $thema['name'],
-                        'leiter' => $thema['leiter'],
-                        'betreuer' => $thema['betreuer'],
-                        'mitarbeiter' => array(),
-                        'technologies' => array());
+        $filename = '../data/' . $thema['leiter'] . '/data.json';
+
+        $filedata = null;
+
+        if (!file_exists('../data/')) {
+            mkdir('../data/');
+        }
+
+        if (!file_exists('../data/' . $thema['leiter'])) {
+            mkdir('../data/' . $thema['leiter']);
+            mkdir('../data/' . $thema['leiter'] . '/images');
+        }
+
+        if (!file_exists($filename)) {
+            $myfile = fopen($filename, "w");
+            fwrite($myfile, $emptyFile);
+            fclose($myfile);
+        }
+
+        $myfile = fopen($filename, "r");
+        $rawFile = fread($myfile,filesize($filename));
+        $filedata = json_decode($rawFile);
+        fclose($myfile);
+
+        $themaData = array('name' => $thema['name'],
+                        'leiterEmail' => $thema['leiter'],
+                        'betreuer' => $thema['betreuer']
+                    );
 
         $thema = $thema['idthema'];
-        $response = array('response' => 'No Errors', 'themaRe' => $themaRe);
+        $response = array('response' => 'No Errors', 'themaRe' => $themaData, 'data' => $filedata);
 
 
-        $_SESSION['leiter'] = $themaRe['leiter'];
+        $_SESSION['leiter'] = $themaData['leiterEmail'];
 
         $pdo->commit();
       } catch (Exception $e) {

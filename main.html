@@ -17,29 +17,24 @@
         </header>
         <main class="centered">
             <img src="" alt="Image" onclick="document.getElementById('logoForm').click()" id="logo">
-            <input type="file" name="logoimage" value="" id="logoForm" onchange="changeImage(event, 'logo')">
+            <input type="file" name="logoimage" value="" id="logoForm" onchange="changeImage(event, 'logo', 'logo')">
             <section id="person">
                 <h2>Projektteam</h2>
                 <h3>Projektleiter</h3>
                 <div class="cardContainer">
                     <div class="card personcard">
                         <img src="" alt="Image" onclick="document.getElementById('projektLeiterImageForm').click()" id="projektLeiterImage">
-                        <input type="file" name="image" value="" id="projektLeiterImageForm" onchange="changeImage('projektLeiterImage')">
+                        <input type="file" name="image" value="" id="projektLeiterImageForm" onchange="changeImage(event, 'projektLeiterImage', 'projektleiter')">
                         <div class="cardStroke"></div>
-                        <input id="projektleiterText" type="text" name="text" value="">
+                        <input id="projektLeiterText" type="text" name="text" value="">
                     </div>
                 </div>
 
                 <h3>Projektmitarbeiter</h3>
                 <div class="cardContainer" id="workerCardContainer">
-                    <div class="card personcard">
-                        <img src="" alt="Image">
-                        <div class="cardStroke"></div>
-                        <input class="textfield" type="text" name="" value="">
-                    </div>
                 </div>
 
-                <button type="button" name="button" onclick='addWorker()'>Add</button>
+                <button type="button" name="button" onclick='addWorker("", "")'>Add</button>
 
             </section>
             <section id="problem">
@@ -48,7 +43,7 @@
                 <div class="cardContainer" id="problemCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
+                        <input id="problemstellung" type="text" name="" value="">
                     </div>
                 </div>
 
@@ -60,7 +55,7 @@
                 <div class="cardContainer" id="goalCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
+                        <input id="zielsetzung" type="text" name="" value="">
                     </div>
                 </div>
 
@@ -69,23 +64,19 @@
                 <h2>Technologien</h2>
 
                 <div class="cardContainer" id="techCardContainer">
-                    <div class="card personcard">
-                        <img src="" alt="Image">
-                        <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
-                    </div>
                 </div>
 
-                <button type="button" name="button" onclick='addCard("techCardContainer")'>Add</button>
+                <button type="button" name="button" onclick='addTech("", "")'>Add</button>
             </section>
             <section id="prototype">
                 <h2>Prototype</h2>
 
                 <div class="cardContainer" id="prototypeCardContainer">
                     <div class="card personcard">
-                        <img src="" alt="Image">
+                        <img src="" alt="Image" onclick="document.getElementById('prototypeForm').click()" id="prototypeImage">
+                        <input type="file" name="prototypeImage" value="" id="prototypeForm" onchange="changeImage(event, 'prototypeImage', 'prototype')">
                         <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
+                        <input id="prototypeText" type="text" name="" value="">
                     </div>
                 </div>
 
@@ -96,7 +87,7 @@
                 <div class="cardContainer" id="resultsCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input type="text" name="" value="">
+                        <input id="ergebnisse" type="text" name="" value="">
                     </div>
                 </div>
 

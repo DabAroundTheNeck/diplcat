@@ -11,8 +11,45 @@
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
-        $file = '../data/' .  . '/' . $post_name . '.png';
+
+        $filename = '../data/' . $_SESSION['leiter'] . '/data.json';
+
+        $filedata = null;
+
+        if (file_exists($filename)) {
+            $myfile = fopen($filename, "r");
+            $rawFile = fread($myfile,filesize($filename));
+            $filedata = json_decode($rawFile);
+            fclose($myfile);
+        }
+
+        $file = '../data/' . $_SESSION['leiter'] . './images/' . $post_name . '.png';
+
         file_put_contents($file, $image_base64);
+
+        switch (explode('_', $post_name)[0]) {
+            case 'logo':
+                $filedata->logo = './images/' . $post_name . '.png';
+                break;
+            case 'projektleiter':
+                $filedata->projektleiter->image = './images/' . $post_name . '.png';
+                break;
+            case 'worker':
+                $filedata->mitarbeiter[explode('_', $post_name)[1]]->image = './images/' . $post_name . '.png';
+                break;
+            case 'tech':
+                $filedata->technologien[explode('_', $post_name)[1]]->image = './images/' . $post_name . '.png';
+                break;
+            case 'prototype':
+                $filedata->prototype->image = './images/' . $post_name . '.png';
+                break;
+            default:
+                break;
+        }
+
+        $myfile = fopen($filename, 'w');
+        fwrite($myfile, json_encode($filedata));
+        fclose($myfile);
 
         $response = array('response' => 'File was saved as: ' . $file);
 

@@ -1,5 +1,3 @@
-//FjcSFzrZbp
-
 function login(form) {
 
     var loginRequest = new XMLHttpRequest();
