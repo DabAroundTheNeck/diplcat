@@ -5,6 +5,25 @@
       //Creating a connection to the Database
       $pdo = create_pdo();
 
+      $emptyFile = '{
+          "logo":"",
+          "projektleiter":{
+              "text":"",
+              "image":""
+          },
+          "mitarbeiter":[
+          ],
+          "problemstellung":"",
+          "zielsetzung":"",
+          "technologien":[
+          ],
+          "prototype":{
+              "text":"",
+              "image":""
+          },
+          "ergebnisse":""
+      }';
+
       try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->beginTransaction();
@@ -16,10 +35,10 @@
 
         //Prepared Statement for the SQL procedure
         if ($post_emailS == 0) {
-            $get_thema_stmt = $pdo->prepare('SELECT * FROM themas where leiter = :leiter;');
+            $get_thema_stmt = $pdo->prepare('SELECT * FROM themas where leiter = :leiter');
             $get_thema_stmt->bindParam(':leiter', $_SESSION['email']);
         } else {
-            $get_thema_stmt = $pdo->prepare('SELECT * FROM themas where idthema = :id and betreuer = :betreuer;');
+            $get_thema_stmt = $pdo->prepare('SELECT * FROM themas where idthema = :id and betreuer = :betreuer');
             $get_thema_stmt->bindParam(':id', $post_id);
             $get_thema_stmt->bindParam(':betreuer', $_SESSION['email']);
         }
@@ -28,54 +47,40 @@
         $thema = $get_thema_stmt->fetch(PDO::FETCH_ASSOC);
         $get_thema_stmt->closeCursor();
 
-        $filename = $thema['projektleiterText'];
+        $filename = '../data/' . $thema['leiter'] . '/data.json';
 
-        if(file_exists($filename)){
-            $fh = fopen($filename, "rb");
-            $thema['projektleiterText'] = fread($fh, filesize($filename));
-            fclose($fh);
-        }else{
-            $thema['projektleiterText'] = null;
+        $filedata = null;
+
+        if (!file_exists('../data/')) {
+            mkdir('../data/');
         }
 
-        $themaRe = array('name' => $thema['name'],
-                        'leiter' => $thema['leiter'],
-                        'betreuer' => $thema['betreuer'],
-                        'projektleiterText' => $thema['projektleiterText'],
-                        'projektleiterImage' => $thema['projektleiterImage'],
-                        'mitarbeiter' => array(),
-                        'technologies' => array());
+        if (!file_exists('../data/' . $thema['leiter'])) {
+            mkdir('../data/' . $thema['leiter']);
+            mkdir('../data/' . $thema['leiter'] . '/images');
+        }
+
+        if (!file_exists($filename)) {
+            $myfile = fopen($filename, "w");
+            fwrite($myfile, $emptyFile);
+            fclose($myfile);
+        }
+
+        $myfile = fopen($filename, "r");
+        $rawFile = fread($myfile,filesize($filename));
+        $filedata = json_decode($rawFile);
+        fclose($myfile);
+
+        $themaData = array('name' => $thema['name'],
+                        'leiterEmail' => $thema['leiter'],
+                        'betreuer' => $thema['betreuer']
+                    );
 
         $thema = $thema['idthema'];
+        $response = array('response' => 'No Errors', 'themaRe' => $themaData, 'data' => $filedata);
 
 
-        for ($i=0; $i < count($technologies); $i++) {
-            $filename = $technologies[$i]['text'];
-            if(file_exists($filename)){
-                $fh = fopen($filename, "rb");
-                $text = fread($fh, filesize($filename));
-                fclose($fh);
-            }else{
-                $text = null;
-            }
-            $themaRe['technologies'][$i]['text'] = $text;
-            $themaRe['technologies'][$i]['image'] = $technologies[$i]['image'];
-        }
-
-
-
-        /*
-
-
-
-        for ($i=0; $i < count($thema); $i++) {
-
-
-
-            $themaRe['mitarbeiter'][$i] = array('text' => $mText, 'img' => $thema[$i]['mImg']);
-        }
-        */
-        $response = array('response' => 'No Errors', 'themaRe' => $themaRe);
+        $_SESSION['leiter'] = $themaData['leiterEmail'];
 
         $pdo->commit();
       } catch (Exception $e) {
