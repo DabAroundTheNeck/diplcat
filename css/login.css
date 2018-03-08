@@ -1,12 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html, body {
-    min-width: 100%;
-    min-height: 100vh;
     font-family: 'Open Sans', sans-serif;
     background-color: #eeeeee;
 }
@@ -27,28 +19,4 @@ h2 {
 
 h3 {
     font-size: 1.7rem;
-}
-
-form {
-  margin: auto;
-}
-
-.centered {
-    display: flex;
-    align-items: center;
-    min-height: 100%;
-    width: 100%;
-}
-
-input {
-  width: 100%;
-}
-
-button {
-  text-align: center;
-  margin: 1em auto 0 auto;
-}
-
-.email, .password {
-  margin-top: 1em;
 }

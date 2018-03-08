@@ -1,12 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html, body {
-    min-width: 100%;
-    min-height: 100%;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -30,71 +22,4 @@ h2 {
 
 h3 {
     font-size: 1.7rem;
-}
-
-section {
-    margin: auto;
-    width: 75%;
-}
-
-.cardContainer {
-    width: 100%;
-    padding: 0 20%;
-    position: relative;
-}
-
-@media (max-width: 700px) {
-    section {
-        margin: 0;
-        width: 100%;
-    }
-
-    .cardContainer {
-        padding: 0 5%;
-    }
-}
-
-@media (max-width: 1200px) {
-    section {
-        margin: 0;
-        width: 90%;
-    }
-
-    .cardContainer {
-        padding: 0 10%;
-    }
-}
-
-
-.card {
-    width: 100%;
-    margin: 0.2em 0;
-    position: relative;
-}
-
-.centered {
-    text-align: center;
-}
-
-.card img {
-    height: var(--imageSize);
-    position: absolute;
-    left: 0;
-}
-
-.card .cardStroke {
-    background-color: #888888;
-    width: 0.2rem;
-    height: var(--imageSize);
-    margin: 0 var(--imageSize);
-}
-
-.card input {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: 0;
-    width: calc(100% - var(--imageSize) * 2);
-    height: 100%;
-    background-color: #eeeeee;
 }
