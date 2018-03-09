@@ -43,7 +43,7 @@
         $logins[count($logins)]['Email'] = $betreuerListe[$i];
     }
     for ($i=0; $i < count($logins); $i++) {
-        $logins[$i]['Password'] = generateRandomString();
+        $logins[$i]['Password'] = getPassword(); //generateRandomString();
     }
 
     echo "Data Structure generated \n";
@@ -206,6 +206,11 @@
         }
 
         return $data;
+    }
+
+    //Change this function if you want another password generator
+    function getPassword() {
+        return generateRandomString(); // You can use any lenght of random string
     }
 
     function generateRandomString($length = 10) {
