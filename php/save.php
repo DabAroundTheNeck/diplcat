@@ -4,6 +4,8 @@
     if ($_SESSION['login'] == 1) {
 
         $post_data = file_get_contents("php://input");
+
+        $post_titel = json_decode($post_data)->{'titel'};
         $post_projektleiter = json_decode($post_data)->{'projektleiter'};
         $post_mitarbeiter = json_decode($post_data)->{'mitarbeiter'};
         $post_problemstellung = json_decode($post_data)->{'problemstellung'};
@@ -13,6 +15,7 @@
         $post_ergebnisse = json_decode($post_data)->{'ergebnisse'};
 
         $filename = '../data/' . $_SESSION['leiter'] . '/data.json';
+        $textfilename = '../data/' . $_SESSION['leiter'] . '/text.txt';
 
         $filedata = null;
 
@@ -24,6 +27,7 @@
         $filedata = json_decode($rawFile);
         fclose($myfile);
 
+        $filedata->titel = $post_titel;
         $filedata->projektleiter->text = $post_projektleiter;
         $filedata->problemstellung = $post_problemstellung;
         $filedata->zielsetzung = $post_zielsetzung;
@@ -40,6 +44,22 @@
 
         $myfile = fopen($filename, 'w');
         fwrite($myfile, json_encode($filedata));
+        fclose($myfile);
+
+        $myfile = fopen($textfilename, 'w');
+        fwrite($myfile, $filedata->titel);
+        fclose($myfile);
+
+        $myfile = fopen($textfilename, 'a');
+        fwrite($myfile, "\n\n");
+        fwrite($myfile, "Projektleiter\n\n");
+        fwrite($myfile, $filedata->projektleiter);
+        fwrite($myfile, "\n#Hier Bild vom Projektleiter " .$filedata->projektleiter->image. "\n\n");
+        for ($i=0; $i < count($filedata->mitarbeiter); $i++) {
+            fwrite($myfile, "Mitarbeiter Nummer". ($i+1) . "\n\n");
+            fwrite($myfile, $filedata->mitarbeiter[$i]->text . "\n");
+            fwrite($myfile, "#Hier Bild des Projektmitarbeiter" . $filedata->mitarbeiter[$i]->image . "\n\n");
+        }
         fclose($myfile);
 
         $response = array('response' => 'File was saved to' . $filename);

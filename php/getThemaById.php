@@ -5,24 +5,7 @@
       //Creating a connection to the Database
       $pdo = create_pdo();
 
-      $emptyFile = '{
-          "logo":"",
-          "projektleiter":{
-              "text":"",
-              "image":""
-          },
-          "mitarbeiter":[
-          ],
-          "problemstellung":"",
-          "zielsetzung":"",
-          "technologien":[
-          ],
-          "prototype":{
-              "text":"",
-              "image":""
-          },
-          "ergebnisse":""
-      }';
+      $emptyFile = '{"logo":"","projektleiter":{"text":"","image":""},"mitarbeiter":[],"problemstellung":"","zielsetzung":"","technologien":[],"prototype":{"text":"","image":""},"ergebnisse":""}';
 
       try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -65,11 +48,13 @@
             fwrite($myfile, $emptyFile);
             fclose($myfile);
         }
-
         $myfile = fopen($filename, "r");
-        $rawFile = fread($myfile,filesize($filename));
-        $filedata = json_decode($rawFile);
-        fclose($myfile);
+        if (filesize($filename) > 0) {
+            $rawFile = fread($myfile, filesize($filename));
+            $filedata = json_encode($rawFile);
+            fclose($myfile);
+        }
+
 
         $themaData = array('name' => $thema['name'],
                         'leiterEmail' => $thema['leiter'],
