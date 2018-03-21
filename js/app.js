@@ -1,4 +1,5 @@
 function save() {
+    var title = document.getElementById('title').innerHTML;
     var projektleiter = document.getElementById('projektLeiterText').value;
     var mitarbeiter = [];
     var allWorkers = document.getElementById('workerCardContainer').children;
@@ -20,7 +21,8 @@ function save() {
 
     var saveRequest = new XMLHttpRequest();
     saveRequest.open('POST', './php/save.php');
-    saveRequest.send('{"projektleiter":"'+projektleiter
+    saveRequest.send('{"titel":"'+title
+            +'","projektleiter":"'+projektleiter
             +'","mitarbeiter":"'+mitarbeiter
             +'","problemstellung":"'+problemstellung
             +'","zielsetzung":"'+zielsetzung
@@ -116,7 +118,7 @@ if (getCookie('cookiezi') == 1) {
                 data = JSON.parse(themaRequest.responseText);
                 thema = data.themaRe;
 
-                var content = data.data;
+                var content = JSON.parse(JSON.parse(data.data));
 
                 console.log(content);
 
