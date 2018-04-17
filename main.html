@@ -18,6 +18,7 @@
         <main class="centered">
             <img src="" alt="Image" onclick="document.getElementById('logoForm').click()" id="logo">
             <input type="file" name="logoimage" value="" id="logoForm" onchange="changeImage(event, 'logo', 'logo')">
+            <input type="text" name="bildbeschriftung" value="" id="logoImageText">
             <section id="person">
                 <h2>Projektteam</h2>
                 <h3>Projektleiter</h3>
@@ -25,8 +26,10 @@
                     <div class="card personcard">
                         <img src="" alt="Image" onclick="document.getElementById('projektLeiterImageForm').click()" id="projektLeiterImage">
                         <input type="file" name="image" value="" id="projektLeiterImageForm" onchange="changeImage(event, 'projektLeiterImage', 'projektleiter')">
+                        <input type="text" name="bildbeschriftung" value="" id="projektLeiterImageText">
+
                         <div class="cardStroke"></div>
-                        <input id="projektLeiterText" type="text" name="text" value="">
+                        <textarea id="projektLeiterText" name="text"></textarea>
                     </div>
                 </div>
 
@@ -34,7 +37,7 @@
                 <div class="cardContainer" id="workerCardContainer">
                 </div>
 
-                <button type="button" name="button" onclick='addWorker("", "")'>Add</button>
+                <button type="button" name="button" onclick='addWorker("", "", "")'>Add</button>
 
             </section>
             <section id="problem">
@@ -43,7 +46,7 @@
                 <div class="cardContainer" id="problemCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input id="problemstellung" type="text" name="" value="">
+                        <textarea id="problemstellung" name="text"></textarea>
                     </div>
                 </div>
 
@@ -55,7 +58,7 @@
                 <div class="cardContainer" id="goalCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input id="zielsetzung" type="text" name="" value="">
+                        <textarea id="zielsetzung" name="text"></textarea>
                     </div>
                 </div>
 
@@ -66,7 +69,7 @@
                 <div class="cardContainer" id="techCardContainer">
                 </div>
 
-                <button type="button" name="button" onclick='addTech("", "")'>Add</button>
+                <button type="button" name="button" onclick='addTech("", "", "")'>Add</button>
             </section>
             <section id="prototype">
                 <h2>Prototype</h2>
@@ -75,8 +78,10 @@
                     <div class="card personcard">
                         <img src="" alt="Image" onclick="document.getElementById('prototypeForm').click()" id="prototypeImage">
                         <input type="file" name="prototypeImage" value="" id="prototypeForm" onchange="changeImage(event, 'prototypeImage', 'prototype')">
+                        <input type="text" name="bildbeschriftung" value="" id="prototypeImageText">
+
                         <div class="cardStroke"></div>
-                        <input id="prototypeText" type="text" name="" value="">
+                        <textarea id="prototypeText" name="text"></textarea>
                     </div>
                 </div>
 
@@ -87,13 +92,13 @@
                 <div class="cardContainer" id="resultsCardContainer">
                     <div class="card personcard">
                         <div class="cardStroke"></div>
-                        <input id="ergebnisse" type="text" name="" value="">
+                        <textarea id="ergebnisse" name=""></textarea>
                     </div>
                 </div>
 
             </section>
-            <div>
-                <button type="button" name="button" onclick='save()'>Save</button>
+            <div id="buttons">
+                <button type="button" name="button" onclick='save(false)'>Save</button>
             </div>
         </main>
         <footer>

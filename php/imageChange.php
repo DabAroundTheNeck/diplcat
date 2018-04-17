@@ -1,4 +1,5 @@
 <?php
+    error_reporting(E_ERROR | E_PARSE);
     session_start();
     include 'function.php';
     if ($_SESSION['login'] == 1) {
@@ -29,7 +30,7 @@
 
         switch (explode('_', $post_name)[0]) {
             case 'logo':
-                $filedata->logo = './images/' . $post_name . '.png';
+                $filedata->logo->image = './images/' . $post_name . '.png';
                 break;
             case 'projektleiter':
                 $filedata->projektleiter->image = './images/' . $post_name . '.png';

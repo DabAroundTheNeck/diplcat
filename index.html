@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Login - Diplomarbeitskatalog</title>
-  <link rel="stylesheet" href="./css/login.css">
+    <head>
+        <meta charset="utf-8">
+        <title>Login - Diplomarbeitskatalog</title>
+        <link rel="stylesheet" href="./css/login.css">
+        <script src="./js/functions.js" charset="utf-8"></script>
 
     </head>
     <body>
-      <div class="centered">
-        <form action="javascript:;" onsubmit="return login(this);">
-            <div class="login">
-              <h1>Diplomarbeitskatalog</h1>
-                <div class="email">
-                    <h2>Email</h2>
-                    <input id="email" type="text" value="" placeholder="Enter Email" name="email" required>
+        <div class="centered">
+            <form action="javascript:;" onsubmit="return login(this);">
+                <div class="login">
+                    <h1>Diplomarbeitskatalog</h1>
+                    <div class="email">
+                        <h2>Email</h2>
+                        <input id="email" type="text" value="" placeholder="Enter Email" name="email" required>
+                    </div>
+                    <div class="password">
+                        <h2>Password</h2>
+                        <input id="password" type="password" placeholder="Password" name="psw" value="" required>
+                        <button type="submit" name="button">Login</button>
+                    </div>
                 </div>
-                <div class="password">
-                    <h2>Password</h2>
-                    <input id="password" type="password" placeholder="Password" name="psw" value="" required>
-                    <button type="submit" name="button">Login</button>
-                </div>
-            </div>
-        </form>
-      </div>
+            </form>
+        </div>
         <script src="./js/login.js" charset="utf-8"></script>
     </body>
 </html>

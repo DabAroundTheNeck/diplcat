@@ -1,33 +1,46 @@
-function save() {
+function save(confirm) {
     var title = document.getElementById('title').innerHTML;
+    var logoImageText = document.getElementById('logoImageText').value;
     var projektleiter = document.getElementById('projektLeiterText').value;
+    var projektleiterImageText = document.getElementById('projektLeiterImageText').value;
     var mitarbeiter = [];
+    var mitarbeiterImageText = [];
     var allWorkers = document.getElementById('workerCardContainer').children;
     for (var i = 0; i < allWorkers.length; i++) {
-        mitarbeiter[i] = allWorkers[i].children[3].value;
+        mitarbeiter[i] = allWorkers[i].children[4].value;
+        mitarbeiterImageText[i] = allWorkers[i].children[2].value;
     }
 
     var problemstellung = document.getElementById('problemstellung').value;
     var zielsetzung = document.getElementById('zielsetzung').value;
 
     var technologien = [];
+    var technologienImageText = [];
     var allTech = document.getElementById('techCardContainer').children;
     for (var i = 0; i < allTech.length; i++) {
-        technologien[i] = allTech[i].children[3].value;
+        technologien[i] = allTech[i].children[4].value;
+        technologienImageText[i] = allTech[i].children[2].value;
     }
 
     var prototype = document.getElementById('prototypeText').value;
+    var prototypeImageText = document.getElementById('prototypeImageText').value;
     var ergebnisse = document.getElementById('ergebnisse').value;
 
     var saveRequest = new XMLHttpRequest();
     saveRequest.open('POST', './php/save.php');
-    saveRequest.send('{"titel":"'+title
+    saveRequest.send('{"confirm":"' + confirm
+            +'","titel":"'+title
+            +'","logoImageText":"'+logoImageText
             +'","projektleiter":"'+projektleiter
+            +'","projektleiterImageText":"'+projektleiterImageText
             +'","mitarbeiter":"'+mitarbeiter
+            +'","mitarbeiterImageText":"'+mitarbeiterImageText
             +'","problemstellung":"'+problemstellung
             +'","zielsetzung":"'+zielsetzung
             +'","technologien":"'+technologien
+            +'","technologienImageText":"'+technologienImageText
             +'","prototype":"'+prototype
+            +'","prototypeImageText":"'+prototypeImageText
             +'","ergebnisse":"'+ergebnisse
             +'"}');
     saveRequest.onreadystatechange = function () {
@@ -42,30 +55,45 @@ function save() {
     };
 }
 
+function confirm() {
+    save(true);
+}
 
-function addWorker(text, image) {
+
+function addWorker(text, image, imageText) {
     var container = document.getElementById('workerCardContainer');
     var id = container.childElementCount;
+    var split = image.split('/');
+    var split = split[split.length-1];
+    if (split == 'undefined') {
+        image = '';
+    }
 
     var workerHTML = '<div class="card personcard">'
                         +'<img src="'+image+'" alt="Image" onclick="document.getElementById(\'worker'+id+'Form\').click()" id="worker'+id+'">'
                         +'<input type="file" name="image" value="" id="worker'+id+'Form" onchange="changeImage(event, \'worker'+id+'\', \'worker_'+id+'\')">'
+                        +'<input type="text" name="bildbeschriftung" value="'+imageText+'" id="worker'+id+'ImageText">'
                         +'<div class="cardStroke"></div>'
-                        +'<input type="text" name="" value="'+text+'">'
+                        +'<textarea name="text">'+text+'</textarea>'
                     +'</div>';
     container.insertAdjacentHTML('beforeend', workerHTML);
 }
 
-function addTech(text, image) {
+function addTech(text, image, imageText) {
     var container = document.getElementById('techCardContainer');
     var id = container.childElementCount;
-
+    var split = image.split('/');
+    var split = split[split.length-1];
+    if (split == 'undefined') {
+        image = '';
+    }
 
     var techHTML = '<div class="card personcard">'
                         +'<img src="'+image+'" alt="Image" onclick="document.getElementById(\'tech'+id+'Form\').click()" id="tech'+id+'">'
                         +'<input type="file" name="image" value="" id="tech'+id+'Form" onchange="changeImage(event, \'tech'+id+'\', \'tech_'+id+'\')">'
+                        +'<input type="text" name="bildbeschriftung" value="'+imageText+'" id="tech'+id+'ImageText">'
                         +'<div class="cardStroke"></div>'
-                        +'<input type="text" name="" value="'+text+'">'
+                        +'<textarea name="text">'+text+'</textarea>'
                     +'</div>';
     container.insertAdjacentHTML('beforeend', techHTML);
 }
@@ -126,29 +154,32 @@ if (getCookie('cookiezi') == 1) {
 
                 var path = './data/' + thema.leiterEmail + '/';
 
-                document.getElementById('logo').src = path + content.logo;
-                document.getElementById('projektLeiterText').value = content.projektleiter.text;
+                document.getElementById('logo').src = path + content.logo.image;
+                document.getElementById('logoImageText').value = content.logo.imageText;
+                document.getElementById('projektLeiterText').innerText = content.projektleiter.text;
                 document.getElementById('projektLeiterImage').src = path + content.projektleiter.image;
-                document.getElementById('problemstellung').value = content.problemstellung;
-                document.getElementById('zielsetzung').value = content.zielsetzung;
-                document.getElementById('prototypeText').value = content.prototype.text;
+                document.getElementById('projektLeiterImageText').value = content.projektleiter.imageText;
+                document.getElementById('problemstellung').innerText = content.problemstellung;
+                document.getElementById('zielsetzung').innerText = content.zielsetzung;
+                document.getElementById('prototypeText').innerText = content.prototype.text;
                 document.getElementById('prototypeImage').src = path + content.prototype.image;
-                document.getElementById('ergebnisse').value = content.ergebnisse;
+                document.getElementById('prototypeImageText').value = content.prototype.imageText;
+                document.getElementById('ergebnisse').innerText = content.ergebnisse;
 
                 if (content.mitarbeiter.length > 0) {
                     for (var i = 0; i < content.mitarbeiter.length; i++) {
-                        addWorker(content.mitarbeiter[i].text, path + content.mitarbeiter[i].image);
+                        addWorker(content.mitarbeiter[i].text, path + content.mitarbeiter[i].image, content.mitarbeiter[i].imageText);
                     }
                 } else {
-                    addWorker("", "");
+                    addWorker("", "", "");
                 }
 
                 if (content.technologien.length > 0) {
                     for (var i = 0; i < content.technologien.length; i++) {
-                        addTech(content.technologien[i].text, path + content.technologien[i].image);
+                        addTech(content.technologien[i].text, path + content.technologien[i].image, content.technologien[i].imageText);
                     }
                 } else {
-                    addTech("", "");
+                    addTech("", "", "");
                 }
 
             } else {
@@ -156,6 +187,9 @@ if (getCookie('cookiezi') == 1) {
             }
         }
     };
+    if (getCookie('betreuer') == "yes") {
+        document.getElementById('buttons').insertAdjacentHTML('beforeend', '<button type="button" name="button" onclick="confirm()">Confirm</button>');
+    }
 } else {
     window.location.pathname = "/user/diplom/index.html";
 }

@@ -1,3 +1,4 @@
+
 function login(form) {
 
     var loginRequest = new XMLHttpRequest();
@@ -11,6 +12,7 @@ function login(form) {
                     if (form.email.value.split("@")[1] == "htldornbirn.at") {   //If Email Ends on @htldornbirn.at its a teacher -> relocate to choice.html
                         window.location.pathname = "/user/diplom/choice.html";
                     } else {
+                        setCookie("betreuer", 0, 0);
                         window.location.pathname = "/user/diplom/main.html";
                     }
                 } else {
@@ -45,3 +47,4 @@ function register() {
 
 deleteCookie('cookiezi');
 deleteCookie('thema');
+deleteCookie('betreuer');

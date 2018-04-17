@@ -1,4 +1,5 @@
 function setThemaCookie(themaId) {
+    setCookie("betreuer", "yes", 0);
     setCookie("thema", themaId, 0);
     window.location.pathname = "/user/diplom/main.html";
 }

@@ -5,7 +5,7 @@
       //Creating a connection to the Database
       $pdo = create_pdo();
 
-      $emptyFile = '{"logo":"","projektleiter":{"text":"","image":""},"mitarbeiter":[],"problemstellung":"","zielsetzung":"","technologien":[],"prototype":{"text":"","image":""},"ergebnisse":""}';
+      $emptyFile = '{"confirm": "false","logo":{"image":"","imageText":""},"projektleiter":{"text":"","image":"","imageText":""},"mitarbeiter":[],"problemstellung":"","zielsetzung":"","technologien":[],"prototype":{"text":"","image":"","imageText":""},"ergebnisse":""}';
 
       try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
