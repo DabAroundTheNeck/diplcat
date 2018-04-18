@@ -4,7 +4,13 @@ function login(form) {
     loginRequest.open('POST', './php/login.php');
     loginRequest.send('{"e":"'+form.email.value+'","pw":"'+form.psw.value+'"}');
     loginRequest.onreadystatechange = function () {
-        if (loginRequest.readyState === DONE) {
+      /*
+       if (this.readyState < 4 ||  this.status != 200) {
+          console.log("Verbindungsfehler!!");
+          alert("Aktueller Zugangsfehler Email//Password!");
+       } else
+       */
+       if (loginRequest.readyState === DONE) {
             if (loginRequest.status === OK) {
                 let parsedResponse = JSON.parse(loginRequest.responseText);
                 if (parsedResponse.response == 1) {
@@ -15,6 +21,7 @@ function login(form) {
                     }
                 } else {
                     console.log("Login Failed");
+                    alert("User/Password ist falsch!");
                 }
             } else {
                 console.log('Error: ' + loginRequest.status); // An error occurred during the request.

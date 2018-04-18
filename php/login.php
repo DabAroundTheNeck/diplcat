@@ -35,7 +35,7 @@
       $response = array('response' => 1);
     } else {
       //Return value on false password verification
-      $response = array('response' => 0);
+      $response = array('response' => 0,  "e-mail ". $post_email => 1,  "password " . $post_password => 2);
     }
     $pdo->commit();
   } catch (Exception $e) {

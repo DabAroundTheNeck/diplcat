@@ -23,7 +23,7 @@
             fclose($myfile);
         }
 
-        $file = '../data/' . $_SESSION['leiter'] . './images/' . $post_name . '.png';
+        $file = '../data/' . $_SESSION['leiter'] . '/images/' . $post_name . '.png';
 
         file_put_contents($file, $image_base64);
 

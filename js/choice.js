@@ -14,11 +14,13 @@ if (getCookie('cookiezi') == 1) {
                 console.log(parsedResponse);
 
                 if (parsedResponse.themas != null) {
+
                     for (var i = 0; i < parsedResponse.themas.length; i++) {
-                        document.getElementById('container').insertAdjacentHTML('beforeend', '<div><button onclick="setThemaCookie('+
+                        document.getElementById('container').insertAdjacentHTML('beforeend', '<div><button class="btn btn-primary" onclick="setThemaCookie('+
                                                                                                 parsedResponse.themas[i].idthema+')">'+parsedResponse.themas[i].name+
                                                                                                 '</button></div>');
                     }
+
                 }
             } else {
                 console.log('Error: ' + loginRequest.status); // An error occurred during the request.
